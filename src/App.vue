@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h2>To Do List</h2>
-    <input class="form-control" v-model="searchText" placeholder="Search">
+    <input class="form-control" v-model="searchText" placeholder="Search" @keyup.enter="searchTodo">
     <hr/>
     <TodoSimpleForm @add-todo="addTodo"/>
     <!-- @emit을 통해 자식컴포넌트에서 받은 객체명="실행할 함수" -->
@@ -50,20 +50,19 @@ export default{
     });
 
     //검색기능을 watch로 구현
+    let timeout = null;
     watch(searchText, () => {
-      getTodo(1);//검색데이터의 첫페이지
+      clearTimeout(timeout);//중복요청 방지를 위해 이전 timeout 요청을 삭제한다.
+      timeout = setTimeout(() =>{
+        getTodo(1);//검색데이터의 첫페이지
+      }, 2000);//2초후에 함수가 실행된다.
     });
 
-    //검색기능 : 필터링 된 todo배열을 리턴함.
-    // const filteredTodos = computed(()=>{
-    //   if(searchText.value){
-    //     return todo.value.filter(thing =>{
-    //         //todo객체안의 subject(String)이 searchText를 포함하고 있으면 filteredTodos로 리턴한다.
-    //         return thing.subject.includes(searchText.value);
-    //     });
-    //   }
-    //     return todo.value;
-    // });
+    const searchTodo = () =>{
+      clearTimeout(timeout);
+      getTodo(1);
+    }
+
     //todo리스트에서 값을 불러오기 (get)
     const getTodo = async (page = currentPage.value) =>{
       error.value = ''; 
@@ -124,7 +123,7 @@ export default{
     return {
       todo,searchText,//filteredTodos
       error,numberOfPages,currentPage,
-      addTodo,deletething,toggleTodo,getTodo,
+      addTodo,deletething,toggleTodo,getTodo,searchTodo,
     };
   }
 }
