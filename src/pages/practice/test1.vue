@@ -66,10 +66,4 @@ export default {
 </script>
 
 <style>
-.box{
-  background-color:antiquewhite;
-  border-radius: 10px;
-  margin: 5px;
-  padding: 30px;
-}
 </style>

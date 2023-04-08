@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../pages/index.vue';
 import Todos from '../pages/todos/index.vue';
-import Practice from '../pages/practice/index.vue';
+import Practice from '../pages/practice/test2.vue';
 
 const router = createRouter({
     history: createWebHistory(),
