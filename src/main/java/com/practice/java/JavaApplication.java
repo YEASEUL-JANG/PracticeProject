@@ -18,12 +18,11 @@ public class JavaApplication {
 		Thread task2thread = new Thread(task2);
 		Thread3 task3 = new Thread3();
 
-		//thread 시
+//		//thread 시
 //		task1.start();
 //		task2thread.start();
-//		task3.start();
-
-		//join test
+//
+//		//join test
 //		task1.join();
 //		task2thread.join();
 //		task3.start();//task1, task2가이 다 끝나야 task3이 시작한다.

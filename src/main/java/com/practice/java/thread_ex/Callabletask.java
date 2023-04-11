@@ -8,7 +8,6 @@ public class Callabletask implements Callable<String> {
     public Callabletask(String name) {
         this.name = name;
     }
-
     @Override
     public String call() throws Exception {
         try{
