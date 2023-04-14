@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="card mt-2" v-for="(thing,index) in todo" :key="thing.id">
-          <div class="card-body p-2 d-flex align-itmes-center">
+          <div class="card-body p-2 d-flex align-itmes-center" @click="moveToPage(thing.id)" >
             <div class="form-check flex-grow-1" >
               <input class="form-check-input" type="checkbox" :checked="thing.completed" @input="toggleTodo(index)">
               <label class="form-check-label" :class="{thing: thing.completed} ">{{thing.subject}}</label>
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import {useRouter} from 'vue-router';
 //import { watchEffect } from 'vue';
 export default {
     props:['todo'],
@@ -26,6 +27,7 @@ export default {
       // watchEffect(() => {
       //   console.log(props.todo.length);
       // });
+        const router=useRouter();
         const toggleTodo=(index)=>{
             emit('toggle-todo',index);
             //부모컴포넌트로 자식컴포넌트의 값이 변경되었음을 알린다. 
@@ -33,8 +35,11 @@ export default {
         const deletething=(index)=>{
             emit('delete-thing',index);
         }
+        const moveToPage =  (id) => {
+          router.push('/todos/'+id);
+        }
         return{
-            toggleTodo,deletething
+            toggleTodo,deletething,moveToPage
         };
     }
 }
