@@ -11,8 +11,13 @@
         <hr>
         2.
         <router-link to="/test">Go test</router-link>
-    </div>
+        <hr>
+        3.
+        <router-link to="/homepage">홈 페이지</router-link> <br>
+        <router-link to="/list">리스트 이동</router-link>
         <router-view/>
+    </div>
+
 </template>
 
 <script>

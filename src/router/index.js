@@ -1,9 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../pages/index.vue';
 import Todos from '../pages/todos/index.vue';
-import Practice from '../pages/practice/test3.vue';
+import Practice from '../pages/practice/test3_routertest.vue';
 import Test from '../pages/practice/test3_routercomp.vue';
 import Todo from '../pages/todos/_id.vue';
+import Homepage from '../pages/practice/test3_homepage.vue';
+import List from '../pages/practice/test3_list.vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -32,6 +34,16 @@ const router = createRouter({
             path:'/todos/:id',
             name: 'Todo',
             component: Todo
+        },
+        {
+            path:'/homepage',
+            name: 'Homepage',
+            component: Homepage
+        },
+        {
+            path:'/list',
+            name: 'List',
+            component: List
         },
     ]
 });
