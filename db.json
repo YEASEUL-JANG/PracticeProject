@@ -2,16 +2,16 @@
   "todos": [
     {
       "subject": "사과",
-      "completed": false,
+      "completed": true,
       "id": 1
     },
     {
-      "subject": "바나나",
+      "subject": "오렌지",
       "completed": false,
       "id": 2
     },
     {
-      "subject": "애플",
+      "subject": "메론d",
       "completed": false,
       "id": 3
     }

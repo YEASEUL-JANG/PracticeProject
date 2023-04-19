@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+    <div>
     <h2>To Do List</h2>
     <input class="form-control" v-model="searchText" placeholder="Search" @keyup.enter="searchTodo">
     <hr/>
@@ -108,13 +108,13 @@ export default{
      }
     };
     //todo리스트 값 수정하기
-    const toggleTodo = async (index) =>{
+    const toggleTodo = async (index, checked) =>{
       const id = todo.value[index].id;
       try{
       await axios.patch('http://localhost:3000/todos/'+id,{
-        completed : !todo.value[index].completed
+        completed : checked
       });
-      todo.value[index].completed = !todo.value[index].completed;
+      todo.value[index].completed = checked
      } catch (err) {
         console.log(err);
      }
