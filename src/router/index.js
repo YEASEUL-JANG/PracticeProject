@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../pages/index.vue';
 import Todos from '../pages/todos/index.vue';
-import Practice from '../pages/practice/test3_routertest.vue';
+import TodoCreate from '../pages/todos/create/index.vue';
+import Practice from '../pages/practice/test4.vue';
 import Test from '../pages/practice/test3_routercomp.vue';
 import Todo from '../pages/todos/_id.vue';
 import Homepage from '../pages/practice/test3_homepage.vue';
@@ -21,6 +22,17 @@ const router = createRouter({
             component: Todos
         },
         {
+            path:'/todos/create',
+            name: 'TodoCreate',
+            component: TodoCreate
+        },
+        {
+            path:'/todos/:id',
+            name: 'Todo',
+            component: Todo
+        },
+
+        {
             path:'/practice',
             name: 'Practice',
             component: Practice
@@ -29,11 +41,6 @@ const router = createRouter({
             path:'/test',
             name: 'Test',
             component: Test
-        },
-        {
-            path:'/todos/:id',
-            name: 'Todo',
-            component: Todo
         },
         {
             path:'/homepage',

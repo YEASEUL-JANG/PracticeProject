@@ -1,10 +1,12 @@
 <template>
     <div>
-    <h2>To Do List</h2>
+        <div class="d-flex justify-content-between mb-3">
+        <h2>To Do List</h2>
+            <button class="btn btn-primary"
+            @click="moveToCreatePage">Create Todo</button>
+        </div>
     <input class="form-control" v-model="searchText" placeholder="Search" @keyup.enter="searchTodo">
     <hr/>
-    <TodoSimpleForm @add-todo="addTodo"/>
-    <!-- @emit을 통해 자식컴포넌트에서 받은 객체명="실행할 함수" -->
     <div>{{ error }}</div>
     <div v-if="!todo.length">Todo를 추가해주세요</div>
     <TodoList :todo="todo" @toggle-todo="toggleTodo" @delete-thing="deletething"/>
@@ -23,17 +25,21 @@
       </ul>
     </nav>
   </div>
+    <Toast v-if="showToast"
+           :message="toastMessage"
+           :type="toastAlertType"/>
 </template>
 
 <script>
-import { ref, computed, watch } from 'vue'; // watchEffect, 
-import TodoSimpleForm from '@/components/TodoSimpleForm.vue';
+import { ref, computed, watch } from 'vue'; // watchEffect,
 import TodoList from '@/components/TodoList.vue';
 import axios from 'axios';
-
+import Toast from '@/components/Toast.vue';
+import {useToast} from "@/composables/toast";
+import {useRouter} from "vue-router";
 export default{
   components:{
-    TodoSimpleForm,TodoList
+    TodoList,Toast
   },
   setup(){
     const todo = ref([]);
@@ -42,14 +48,20 @@ export default{
     const numberOfthings = ref(0);
     let limit = 5;
     const currentPage = ref(1);
-
+    const router = useRouter();
+const {
+    toastMessage,
+    toastAlertType,
+    showToast,
+    triggerToast
+} = useToast();
     
     //총 페이지 수 계산
     const numberOfPages = computed(() => {
         return Math.ceil(numberOfthings.value/limit);
     });
 
-    //검색기능을 watch로 구현
+    // 검색기능을 watch로 구현
     let timeout = null;
     watch(searchText, () => {
       clearTimeout(timeout);//중복요청 방지를 위해 이전 timeout 요청을 삭제한다.
@@ -63,7 +75,8 @@ export default{
       getTodo(1);
     }
 
-    //todo리스트에서 값을 불러오기 (get)
+
+    // todo 리스트에서 값을 불러오기 (get)
     const getTodo = async (page = currentPage.value) =>{
       error.value = ''; 
       currentPage.value=page;
@@ -76,7 +89,7 @@ export default{
           todo.value = res.data;
       }catch (err) {
         console.log(err);
-        error.value = 'Something went wrong';
+          triggerToast('Something went wrong','danger');
       }
     };
     getTodo();
@@ -92,10 +105,10 @@ export default{
         getTodo(1);
     } catch (err){
         console.log(err);
-        error.value = 'Something went wrong';
+          triggerToast('Something went wrong','danger');
       }
     };
-    //todo리스트 값 삭제하기
+    // todo 리스트 값 삭제하기
     const deletething = async (index) => {
       error.value = '';
       try{
@@ -104,10 +117,10 @@ export default{
       getTodo(1);
     } catch (err){
       console.log(err);
-      error.value = 'Something went wrong';
+      triggerToast('Something went wrong','danger');
      }
     };
-    //todo리스트 값 수정하기
+    // todo 리스트 값 수정하기
     const toggleTodo = async (index, checked) =>{
       const id = todo.value[index].id;
       try{
@@ -117,13 +130,21 @@ export default{
       todo.value[index].completed = checked
      } catch (err) {
         console.log(err);
+          triggerToast('Something went wrong','danger');
      }
     };
+
+    const moveToCreatePage= () => {
+        router.push({
+            name: 'TodoCreate'
+        })
+    }
 
     return {
       todo,searchText,//filteredTodos
       error,numberOfPages,currentPage,
-      addTodo,deletething,toggleTodo,getTodo,searchTodo,
+      addTodo,deletething,toggleTodo,getTodo,
+        searchTodo,showToast,toastMessage,toastAlertType,triggerToast,moveToCreatePage
     };
   }
 }

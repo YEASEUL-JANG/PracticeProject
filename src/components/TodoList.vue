@@ -2,9 +2,9 @@
     <div>
         <div class="card mt-2" v-for="(thing,index) in todo" :key="thing.id">
           <div class="card-body p-2 d-flex align-itmes-center" style="cursor: pointer" @click="moveToPage(thing.id)" >
-            <div class="form-check flex-grow-1" >
-              <input class="form-check-input" type="checkbox" :checked="thing.completed" @click.stop="toggleTodo(index,$event)">
-              <label class="form-check-label" :class="{thing: thing.completed} ">{{thing.subject}}</label>
+            <div class="flex-grow-1" >
+              <input class="ml-2 mr-2" type="checkbox" :checked="thing.completed" @click.stop="toggleTodo(index,$event)">
+              <span :class="{thing: thing.completed} ">{{thing.subject}}</span>
               <!-- :style="thing.completed?todoStyle:{}" 으로 스타일을 바인딩해서 사용할 수도 있다.  -->
               <!-- :class 속성을 바인딩할때 {클래스이름 : 속성} 에서 속성이 true일때만 클래스가 동작하게 된다.  -->
             </div>
