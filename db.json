@@ -9,23 +9,6 @@
       "subject": "오렌지",
       "completed": false,
       "id": 2
-    },
-    {
-      "subject": "메론",
-      "completed": false,
-      "id": 3
-    },
-    {
-      "subject": "asdf",
-      "completed": false,
-      "body": "asdf",
-      "id": 4
-    },
-    {
-      "subject": "sdf",
-      "completed": false,
-      "body": "sdf",
-      "id": 5
     }
   ],
   "test": []

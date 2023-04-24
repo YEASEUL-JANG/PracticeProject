@@ -109,10 +109,9 @@ const {
       }
     };
     // todo 리스트 값 삭제하기
-    const deletething = async (index) => {
+    const deletething = async (id) => {
       error.value = '';
       try{
-      const id = todo.value[index].id;
       await axios.delete('http://localhost:3000/todos/'+id);
       getTodo(1);
     } catch (err){
