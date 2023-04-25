@@ -3,15 +3,15 @@
 <form v-else @submit.prevent="onSave">
 <div class="row">
     <div class="col-6">
-        <div class="form-group">
-            <label>Subject</label>
-            <input type="text"
-                   v-model="todo.subject"
-                   class="form-control">
-            <div v-if="subjectError" class="text-red">
-                {{subjectError}}
-            </div>
-        </div>
+<!--       todo.subject를 Input 컴포넌트의 :subject로 내려주고 (한개만일 경우 생략가능하다)
+            Input컴포넌트에서 올리는 subject는 emit으로 : 을 사용해 올린다.-->
+        <Input
+            v-model:subject="todo.subject"
+            :error="subjectError"
+            label="Subject"
+        >
+
+        </Input>
     </div>
     <div v-if="editing" class="col-6">
         <div class="form-group">
@@ -51,13 +51,13 @@
  <script>
  import { useRoute, useRouter } from 'vue-router';
  import axios from "axios";
- import {ref,computed } from "vue";
+ import {ref,computed,onUpdated } from "vue";
  import _ from "lodash";
  import Toast from '@/components/Toast.vue';
  import {useToast} from "@/composables/toast";
-
+import Input from "@/components/input.vue";
  export default {
-     components:{ Toast},
+     components:{ Toast, Input},
      props: {
        editing: {
            type: Boolean,
@@ -81,6 +81,9 @@
              showToast,
              triggerToast
          } = useToast();
+         onUpdated(()=>{
+             console.log(todo.value.subject);
+         })
          const subjectError = ref('');
          const getTodo = async () => {
              loading.value=true;
@@ -151,9 +154,7 @@
  </script>
 <style scoped>
 /*scoped는 해당 컴포넌트에서만 적용된다는 의미*/
-.text-red{
-    color: red;
-}
+
 .fade-enter-active,
 .fade-leave-active {
     transition: all 0.5s ease;

@@ -1,7 +1,7 @@
 <template>
     <div>
         <List :items="todo">
-<!--           해당 컴포넌트 안에 코드가 List안의 slot으로 들엉가게 됨.-->
+<!--           해당 컴포넌트 사이의 코드가 List안의 slot으로 들엉가게 됨.-->
          <template #default="{item, index}">
 <!--           item과 index를 List 컴포넌트  -->
           <div class="card-body p-2 d-flex align-itmes-center" style="cursor: pointer" @click="moveToPage(item.id)" >
