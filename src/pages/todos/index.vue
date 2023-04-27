@@ -25,21 +25,17 @@
       </ul>
     </nav>
   </div>
-    <Toast v-if="showToast"
-           :message="toastMessage"
-           :type="toastAlertType"/>
 </template>
 
 <script>
 import { ref, computed, watch } from 'vue'; // watchEffect,
 import TodoList from '@/components/TodoList.vue';
-import axios from 'axios';
-import Toast from '@/components/Toast.vue';
+import axios from '@/axios';
 import {useToast} from "@/composables/toast";
 import {useRouter} from "vue-router";
 export default{
   components:{
-    TodoList,Toast
+    TodoList
   },
   setup(){
     const todo = ref([]);
@@ -83,7 +79,7 @@ const {
       try{
         const res = await axios.get(
           //백틱으로 감싸면 안에 자바스크립트 변수 입력가능
-          `http://localhost:3000/todos?_sort=id&_order=desc&subject_like=${searchText.value}&_page=${page}&_limit=${limit}`
+          `todos?_sort=id&_order=desc&subject_like=${searchText.value}&_page=${page}&_limit=${limit}`
           );
           numberOfthings.value = res.headers['x-total-count'];
           todo.value = res.data;
@@ -98,7 +94,7 @@ const {
     const addTodo = async (thing) =>{
       error.value = '';
       try {      
-       await axios.post('http://localhost:3000/todos',{
+       await axios.post('todos',{
         subject: thing.subject,
         completed: thing.completed,
       });
@@ -112,7 +108,7 @@ const {
     const deletething = async (id) => {
       error.value = '';
       try{
-      await axios.delete('http://localhost:3000/todos/'+id);
+      await axios.delete('todos/'+id);
       getTodo(1);
     } catch (err){
       console.log(err);
@@ -123,7 +119,7 @@ const {
     const toggleTodo = async (index, checked) =>{
       const id = todo.value[index].id;
       try{
-      await axios.patch('http://localhost:3000/todos/'+id,{
+      await axios.patch('todos/'+id,{
         completed : checked
       });
       todo.value[index].completed = checked

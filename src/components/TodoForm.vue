@@ -42,22 +42,17 @@
     Cancel
 </button>
 </form>
-    <transition name="fade">
-<Toast v-if="showToast"
-       :message="toastMessage"
-       :type="toastAlertType"/>
-    </transition>
 </template>
  <script>
  import { useRoute, useRouter } from 'vue-router';
- import axios from "axios";
+ import axios from "@/axios";
  import {ref,computed } from "vue";
  import _ from "lodash";
- import Toast from '@/components/Toast.vue';
  import {useToast} from "@/composables/toast";
 import Input from "@/components/input.vue";
+
  export default {
-     components:{ Toast, Input},
+     components:{ Input},
      props: {
        editing: {
            type: Boolean,
@@ -85,7 +80,7 @@ import Input from "@/components/input.vue";
          const getTodo = async () => {
              loading.value=true;
              try {
-                 const res = await axios.get(`http://localhost:3000/todos/${todoId}`);
+                 const res = await axios.get(`todos/${todoId}`);
                  todo.value = res.data;
                  originalTodo.value = {...res.data};
                  //같은 객체를 다른곳에 담게되면 같은 주소를 바라보고 있기 때문에
@@ -123,10 +118,10 @@ import Input from "@/components/input.vue";
                      body : todo.value.body
                  }
                  if(props.editing) {//editing모드이면 put으로 update쿼리, create모드이면 insert쿼리를 진행
-                    res = await axios.put(`http://localhost:3000/todos/${todoId}`, data);
+                    res = await axios.put(`todos/${todoId}`, data);
                      originalTodo.value = {...res.data};
                  } else {
-                     res = await axios.post(`http://localhost:3000/todos`, data);
+                     res = await axios.post('todos', data);
                      todo.value.subject = '';
                      todo.value.body = '';
 
@@ -134,6 +129,12 @@ import Input from "@/components/input.vue";
 
                  const message = 'Successfully ' + (props.editing ? 'Updated' : 'Created');
                  triggerToast(message);
+
+                 if(!props.editing){//생성할때
+                     router.push({
+                         name: 'Todos'
+                     })
+                 }
              } catch(err) {
                  console.log(err);
                  triggerToast('Something went wrong','danger');
@@ -150,20 +151,4 @@ import Input from "@/components/input.vue";
  }
  </script>
 <style scoped>
-/*scoped는 해당 컴포넌트에서만 적용된다는 의미*/
-
-.fade-enter-active,
-.fade-leave-active {
-    transition: all 0.5s ease;
-}
-.fade-enter-from,
-.fade-leave-to {
-    opacity: 0;
-    transform : translateY(-30px);
-}
-.fade-enter-to,
-.fade-leave-from {
-    opacity: 1;
-    transform : translateY(0px);
-}
 </style>

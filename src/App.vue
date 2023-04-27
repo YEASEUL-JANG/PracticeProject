@@ -14,19 +14,20 @@
     <div class="container">
   <router-view/>
     </div>
+    <transition name="slide">
+  <Toast/>
+    </transition>
 </template>
 
 <script>
-export default {
+import Toast from "@/components/Toast.vue";
 
+export default {
+components:{
+    Toast
+},
 }
 </script>
 
-<style>
-.box{
-  background-color:antiquewhite;
-  border-radius: 10px;
-  margin: 5px;
-  padding: 30px;
-}
+<style scoped>
 </style>
