@@ -1,4 +1,5 @@
 import toast from "./toast";
+import test from "./test";
 export default {
-    toast
+    toast,test
 }

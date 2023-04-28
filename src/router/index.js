@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../pages/index.vue';
 import Todos from '../pages/todos/index.vue';
 import TodoCreate from '../pages/todos/create/index.vue';
-import Practice from '../pages/practice/test5.vue';
+import Practice from '../pages/practice/test6.vue';
 import Test from '../pages/practice/test3_routercomp.vue';
 import Todo from '../pages/todos/_id.vue';
 import Homepage from '../pages/practice/test3_homepage.vue';
