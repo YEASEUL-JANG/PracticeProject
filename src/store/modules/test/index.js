@@ -3,7 +3,9 @@ export default {
     state: {
         count: 0,
         show: false,
-        message: ''
+        message: '',
+        popupmessage: '',
+        showpopup: false
     },
     mutations: {
         ADD_COUNT(state){
@@ -11,6 +13,14 @@ export default {
         },
         MINUS_COUNT(state){
             state.count--;
+        },
+        SHOW_MODAL(state,payload) {
+            state.showpopup=true;
+            state.popupmessage=payload;
+        },
+        DISSHOW_MODAL(state) {
+            state.showpopup=false;
+            state.popupmessage='';
         }
     },
     getters: {

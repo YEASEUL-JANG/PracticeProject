@@ -7,6 +7,7 @@ import Test from '../pages/practice/test3_routercomp.vue';
 import Todo from '../pages/todos/_id.vue';
 import Homepage from '../pages/practice/test3_homepage.vue';
 import List from '../pages/practice/test3_list.vue';
+import TodoList from "@/pages/practice/test6_list.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -51,6 +52,11 @@ const router = createRouter({
             path:'/list',
             name: 'List',
             component: List
+        },
+        {
+            path:'/todolist',
+            name: 'TodoList',
+            component: TodoList
         },
     ]
 });

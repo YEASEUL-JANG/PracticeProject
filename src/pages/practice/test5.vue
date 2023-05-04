@@ -1,13 +1,5 @@
 <template>
  <div>
- 1.<Test5_input
-   label="email"
-   v-model:email="email"
- ></Test5_input>
- <button @click="onsubmit">제출</button> <br>
- 이메일은 <input :value="submitEmail"> 입니다.
- </div>
- <div>
   2. <Test5_comp/>
  </div>
  <div>
@@ -24,15 +16,12 @@
  </div>
 </template>
 <script>
-import Test5_input from "@/pages/practice/test5_input.vue";
 import {ref, watch} from "vue";
 import Test5_comp from "@/pages/practice/test5_comp.vue";
 
 export default {
-    components: {Test5_comp, Test5_input},
+    components: {Test5_comp},
     setup(){
-        const email = ref('');
-        const submitEmail = ref('');
         const checkType=ref(false);
         const checkText = ref('');
 
@@ -40,11 +29,8 @@ export default {
       if(checkText.value !== '') checkType.value = true;
       else checkType.value = false;
      });
-     const onsubmit = () => {
-         submitEmail.value = email.value;
-        }
     return{
-        email, onsubmit, submitEmail,checkText,checkType
+        onsubmit,checkText,checkType
     }
     }
 }
