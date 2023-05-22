@@ -1,5 +1,9 @@
 package jpabook.jpashop.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.stereotype.Service;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -7,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name="orders")
+@Setter @Getter
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,5 +44,44 @@ public class Order {
     public void setDelivery(Delivery delivery){
         this.delivery=delivery;
         delivery.setOrder(this);
+    }
+
+    //==생성메서드==//
+    //... : 가변인자로써 동적으로 개수가 변할 수 있는 인자를 받을 수 있게 한다. 배열을 사용하지 않고 변수를 배열처럼 다룰 수 있다.
+    public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems) {
+        Order order = new Order();
+        order.setMember(member);
+        order.setDelivery(delivery);
+        for(OrderItem orderItem: orderItems) {
+            order.addOrderItem(orderItem);
+        }
+        order.setStatus(OrderStatus.ORDER);
+        order.setOrderDate(LocalDateTime.now());
+        return order;
+    }
+    //==비지니스 로직==//
+    /**
+     * 주문취소
+     */
+    public void cancel(){
+        if(delivery.getStatus()== DeliveryStatus.COMP){
+            throw new IllegalStateException("이미 배송 완료된 상품은 취소가 불가능합니다.");
+        }
+        this.setStatus(OrderStatus.CANCEL);
+        for(OrderItem orderItem: orderItems){
+            orderItem.cancel();
+        }
+    }
+    //==조회 로직==//
+
+    /**
+     * 전체 주문 가격조회
+     */
+    public int getTotalPrice() {
+        return orderItems.stream()
+                .mapToInt(OrderItem::getTotalPrice)
+                .sum();
+
+
     }
 }

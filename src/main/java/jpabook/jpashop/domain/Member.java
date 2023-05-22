@@ -23,7 +23,6 @@ public class Member {
 
     @OneToMany(mappedBy = "member") //order테이블에 있는 member필드와 연관된거다.
     //나는 맵핑된 거울일 뿐이다.(주인은 orders)
-
     private List<Order> orders = new ArrayList<>();
 
 }
