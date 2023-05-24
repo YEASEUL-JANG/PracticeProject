@@ -14,9 +14,10 @@ public class ItemRepository {
     private final EntityManager em;
 
     public void save(Item item) {
-        if(item.getId() == null) {
+        if(item.getId() == null) {//id가 있다는건 등록된 아이템이라는 뜻이기 때문
             em.persist(item);//신규로 등록
         }else {
+            //merge는 사용하지 않는것이 좋다.
             em.merge(item);//업데이트
         }
     }

@@ -27,6 +27,10 @@ public class OrderItem {
     private int orderPrice;
     private int count;
 
+    //다른 클래스에서 new로 생성되는 것을 막음(유지보수)
+    protected OrderItem() {
+    }
+
     //==생성메서드==//
     public static OrderItem createOrderItem(Item item, int orderPrice, int count) {
         OrderItem orderItem = new OrderItem();
