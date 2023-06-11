@@ -24,6 +24,7 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="member_id")
     private Member member;
+
     //CascadeType.ALL : order를 persist 하면 orderitem도 모두 persist되게한다.
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();

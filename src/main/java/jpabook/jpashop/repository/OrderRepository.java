@@ -29,7 +29,7 @@ public class OrderRepository {
     //쿼리를 분기식을 통해 문자로 직접 짜는 방법은 복잡하고 실수가 잦을 수 있으므로 비추.
     //JPA 공식문서에 criteria 를 활용한 동적쿼리방법이 있지만
     // 실제 실무에서는 Querydsl로 처리할 것을 추천한다.
-    public List<Order> findAll(OrderSearch orderSearch) {
+    public List<Order> findAllByString(OrderSearch orderSearch) {
 //        List<Order> resultList = em.createQuery("select o from Order o join o.member m" +
 //                        " where o.status = :status " +
 //                        "and m.name like :name", Order.class)
@@ -54,10 +54,10 @@ public class OrderRepository {
     }
 
     private Predicate nameLike(String memberName) {
-        if(!StringUtils.hasText(memberName)){
+        if(!StringUtils.hasText(memberName)){ //null or ""
             return null;
         }
-        return QMember.member.name.like(memberName);
+        return QMember.member.name.contains(memberName);
     }
 
     private BooleanExpression statusEq(OrderStatus orderStatus) {
@@ -67,4 +67,26 @@ public class OrderRepository {
         return QOrder.order.status.eq(orderStatus);
     }
 
+    public List<Order> findAllWithMemberDelivery() {
+        return em.createQuery(
+                "select o from Order o" +
+                        " join fetch o.member m" +
+                        " join fetch o.delivery d", Order.class
+        ).getResultList();
+    }
+    //fetch 조인을 사용하게 되면 Lazy 처리 무시하고
+    // Order를 가져올 때 연관관계 에 있는 member, delivery 모두 가져와서 채움.
+
+    public List<OrderSimpleQueryDto> findOrderDtos() {
+        return em.createQuery(
+                "select new jpabook.jpashop.repository.OrderSimpleQueryDto(o.id, m.name,o.orderDate, o.status,d.address) " +
+                        "from Order o " +
+                " join o.member m" +
+                " join o.delivery d",OrderSimpleQueryDto.class)
+                .getResultList();
+    }
+
+    //new 명령어를 사용해서 JPQL 의 결과를 DTO로 즉시 변환함.
+    //리포지토리 재사용성이 떨어진다. api스펙에 맞춘 코드가 리포지토리에 들어가는 단점.
 }
+
