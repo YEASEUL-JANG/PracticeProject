@@ -2,10 +2,10 @@ package com.group.libraryapp.service.book
 
 import com.group.libraryapp.domain.book.Book
 import com.group.libraryapp.domain.book.BookRepository
-import com.group.libraryapp.domain.user.User
-import com.group.libraryapp.domain.user.UserRepository
+import com.group.libraryapp.domain.user.loanhistory.User
 import com.group.libraryapp.domain.user.loanhistory.UserLoanHistory
 import com.group.libraryapp.domain.user.loanhistory.UserLoanHistoryRepository
+import com.group.libraryapp.domain.user.loanhistory.UserRepository
 import com.group.libraryapp.dto.book.request.BookLoanRequest
 import com.group.libraryapp.dto.book.request.BookRequest
 import com.group.libraryapp.dto.book.request.BookReturnRequest
@@ -47,7 +47,7 @@ class BookServiceTest @Autowired constructor(
     fun loanBookTest(){
         //given
         bookRepository.save(Book("이상한 나라의 앨리스"))
-        val user = userRepository.save(User("yeaseul",30))
+        val user = userRepository.save(User("yeaseul", 30))
         val request = BookLoanRequest("yeaseul","이상한 나라의 앨리스")
         //when
         bookService.loanBook(request)
