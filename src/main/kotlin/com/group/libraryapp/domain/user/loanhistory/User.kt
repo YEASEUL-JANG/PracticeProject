@@ -12,6 +12,7 @@ import javax.persistence.OneToMany
 class User (
         var name: String,
         val age: Int?,
+
         @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], orphanRemoval = true )
         val userLoanHistories: MutableList<UserLoanHistory> = mutableListOf(),
 
