@@ -23,7 +23,7 @@ class UserService(
     @Transactional(readOnly = true)
     fun getUsers(): List<UserResponse>{
         return userRepository.findAll()
-                .map { UserResponse(it) }
+                .map { user -> UserResponse.of(user)  }
     }
     @Transactional
     fun updateUserName(request: UserUpdateRequest){
@@ -36,5 +36,6 @@ class UserService(
     fun deleteUser(name: String){
         val user = userRepository.findByName(name) ?: fail()
         userRepository.delete(user)
+
     }
 }
