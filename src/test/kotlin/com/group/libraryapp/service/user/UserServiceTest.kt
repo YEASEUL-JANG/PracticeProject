@@ -1,7 +1,6 @@
 package com.group.libraryapp.service.user
 
-import com.group.libraryapp.domain.user.loanhistory.User
-import com.group.libraryapp.domain.user.loanhistory.UserRepository
+import com.group.libraryapp.domain.user.loanhistory.*
 import com.group.libraryapp.dto.user.request.UserCreateRequest
 import com.group.libraryapp.dto.user.request.UserUpdateRequest
 import org.assertj.core.api.Assertions.assertThat
@@ -15,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest
 class UserServiceTest @Autowired constructor(
         private val userRepository: UserRepository,
         private val userService: UserService,
-
+        private val userLoanHistoryRepository: UserLoanHistoryRepository,
         ) {
     @AfterEach
     fun clean(){
@@ -73,4 +72,37 @@ class UserServiceTest @Autowired constructor(
         assertThat(userRepository.findAll()).isEmpty()
     }
 
+    @Test
+    @DisplayName("대출 기록이 없는 유저도 응답에 포함된다.")
+    fun getUwerLoanHistoriesTest(){
+        //given
+        userRepository.save(User("A",null))
+        //when
+        val results = userService.getUserLoanHistories()
+
+        //then
+        assertThat(results).hasSize(1)
+        assertThat(results[0].name).isEqualTo("A")
+        assertThat(results[0].books).isEmpty()
+    }
+
+    @Test
+    @DisplayName("대출 기록이 많은 유저의 응답이 포함된다.")
+    fun getUwerLoanHistoriesTest2(){
+        //given
+        val saveUser = userRepository.save(User("A",null))
+        userLoanHistoryRepository.saveAll(listOf(
+                UserLoanHistory.fixture(saveUser, "책1",UserLoanStatus.LOANED),
+                UserLoanHistory.fixture(saveUser, "책2",UserLoanStatus.LOANED),
+                UserLoanHistory.fixture(saveUser, "책3",UserLoanStatus.RETURNED),
+
+        ))
+        //when
+        val results = userService.getUserLoanHistories()
+
+        //then
+        assertThat(results).hasSize(3)
+        assertThat(results[0].name).isEqualTo("A")
+        assertThat(results[0].books).isEmpty()
+    }
 }
