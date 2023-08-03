@@ -26,15 +26,15 @@ public class QUserLoanHistory extends EntityPathBase<UserLoanHistory> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final EnumPath<com.group.libraryapp.domain.user.UserLoanStatus> status = createEnum("status", com.group.libraryapp.domain.user.UserLoanStatus.class);
+    public final EnumPath<UserLoanStatus> status = createEnum("status", UserLoanStatus.class);
 
-    public final com.group.libraryapp.domain.user.QUser user;
+    public final QUser user;
 
     public QUserLoanHistory(String variable) {
         this(UserLoanHistory.class, forVariable(variable), INITS);
     }
 
-    public QUserLoanHistory(Path<UserLoanHistory> path) {
+    public QUserLoanHistory(Path<? extends UserLoanHistory> path) {
         this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
@@ -48,7 +48,7 @@ public class QUserLoanHistory extends EntityPathBase<UserLoanHistory> {
 
     public QUserLoanHistory(Class<? extends UserLoanHistory> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.user = inits.isInitialized("user") ? new com.group.libraryapp.domain.user.QUser(forProperty("user")) : null;
+        this.user = inits.isInitialized("user") ? new QUser(forProperty("user")) : null;
     }
 
 }

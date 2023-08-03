@@ -18,6 +18,7 @@ class UserServiceTest @Autowired constructor(
         ) {
     @AfterEach
     fun clean(){
+        println("CLEAN 시작")
         userRepository.deleteAll()
     }
     @Test
@@ -74,7 +75,7 @@ class UserServiceTest @Autowired constructor(
 
     @Test
     @DisplayName("대출 기록이 없는 유저도 응답에 포함된다.")
-    fun getUwerLoanHistoriesTest(){
+    fun getUserLoanHistoriesTest(){
         //given
         userRepository.save(User("A",null))
         //when
@@ -88,21 +89,22 @@ class UserServiceTest @Autowired constructor(
 
     @Test
     @DisplayName("대출 기록이 많은 유저의 응답이 포함된다.")
-    fun getUwerLoanHistoriesTest2(){
+    fun getUserLoanHistoriesTest2(){
         //given
         val saveUser = userRepository.save(User("A",null))
         userLoanHistoryRepository.saveAll(listOf(
                 UserLoanHistory.fixture(saveUser, "책1",UserLoanStatus.LOANED),
                 UserLoanHistory.fixture(saveUser, "책2",UserLoanStatus.LOANED),
                 UserLoanHistory.fixture(saveUser, "책3",UserLoanStatus.RETURNED),
-
         ))
         //when
         val results = userService.getUserLoanHistories()
-
         //then
-        assertThat(results).hasSize(3)
+        assertThat(results).hasSize(1)
         assertThat(results[0].name).isEqualTo("A")
-        assertThat(results[0].books).isEmpty()
+        assertThat(results[0].books).extracting("name")
+                .containsExactlyInAnyOrder("책1","책2","책3");
+        assertThat(results[0].books).extracting("isReturn")
+                .containsExactlyInAnyOrder(false,false,true);
     }
 }
