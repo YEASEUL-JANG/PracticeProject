@@ -1,7 +1,7 @@
-package com.group.libraryapp.domain.user.loanhistory
+package com.group.libraryapp.repository.user
 
+import com.group.libraryapp.domain.user.loanhistory.User
 import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.data.jpa.repository.Query
 
 interface UserRepository : JpaRepository<User,Long>, UserRepositoryCustom {
 

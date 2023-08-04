@@ -1,7 +1,7 @@
-package com.group.libraryapp.domain.user.loanhistory
+package com.group.libraryapp.repository.user
 
 import com.group.libraryapp.domain.user.loanhistory.QUser.user
-import com.group.libraryapp.domain.user.loanhistory.QUserLoanHistory.userLoanHistory
+import com.group.libraryapp.domain.user.loanhistory.User
 import com.querydsl.jpa.impl.JPAQueryFactory
 
 class UserRepositoryCustomImpl(
@@ -10,8 +10,7 @@ class UserRepositoryCustomImpl(
     override fun findAllWithHistories(): List<User> {
         return queryFactory.select(user).distinct()
                 .from(user)
-                .leftJoin(userLoanHistory)
-                .on(userLoanHistory.user.id.eq(user.id))
+                .leftJoin(user.userLoanHistories)
                 .fetchJoin().fetch()
     }
 }

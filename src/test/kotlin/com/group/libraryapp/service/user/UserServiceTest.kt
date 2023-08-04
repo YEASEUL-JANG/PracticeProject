@@ -3,6 +3,8 @@ package com.group.libraryapp.service.user
 import com.group.libraryapp.domain.user.loanhistory.*
 import com.group.libraryapp.dto.user.request.UserCreateRequest
 import com.group.libraryapp.dto.user.request.UserUpdateRequest
+import com.group.libraryapp.repository.user.loanhistory.UserLoanHistoryRepository
+import com.group.libraryapp.repository.user.UserRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
