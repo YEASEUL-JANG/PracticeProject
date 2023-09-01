@@ -1,10 +1,13 @@
 server:
-  port: 9001
+  port: 0
+  #0번 포트는 랜덤포트로 생성됨
 
 spring:
   application:
     name: user-service
 eureka:
+  instance:
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${random.value}}
   client:
     register-with-eureka: true #EUREKA 서버의 자원으로 등록하겠다
     fetch-registry: true #EUREKA 서버로부터 인스턴스의 갱신정보를 주기적으로 받아올건지
