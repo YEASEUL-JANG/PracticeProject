@@ -5,14 +5,30 @@ server:
 spring:
   application:
     name: user-service
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://127.0.0.1:3308/userService
+    username: yeaseul
+    password: dptmfl12
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+
 eureka:
   instance:
-    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${random.value}}
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
   client:
     register-with-eureka: true #EUREKA 서버의 자원으로 등록하겠다
     fetch-registry: true #EUREKA 서버로부터 인스턴스의 갱신정보를 주기적으로 받아올건지
     service-url:
       defaultZone: http://127.0.0.1:8761/eureka
+
+
+greeting:
+  message: Welcom to the Simple E-commerce.
 
 
 
