@@ -3,13 +3,15 @@ package com.example.userservice.controller;
 import com.example.userservice.RequestUser;
 import com.example.userservice.service.UserService;
 import com.example.userservice.vo.Greeting;
-import com.example.userservice.vo.UserDto;
-import com.netflix.discovery.converters.Auto;
+import com.example.userservice.dto.UserDto;
+import com.example.userservice.vo.ResponseUser;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,35 +19,33 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user-service")
 public class UserController {
 
-    @Autowired
-    private Greeting greeting;
-
-    @Autowired
+    private Environment env;
     private UserService userService;
 
-    private Environment env;
     @Autowired
-    public UserController(Environment env) {
+    public UserController(Environment env, UserService userService) {
         this.env = env;
-    }
-
-    @GetMapping("/health_check")
-    public String status(){
-        return "It's working in User-Service";
+        this.userService = userService;
     }
     @GetMapping("/welcome")
     public String welcome(){
-       // return env.getProperty("greeting.message");
-        return greeting.getMessage();
+        return env.getProperty("greeting.message");
+       // return greeting.getMessage();
+    }
+    @GetMapping("/health_check")
+    public String status(){
+        return String.format("It's working in User Service on PORT %s", env.getProperty("local.server.port"));
     }
 
     @PostMapping("/users")
-    public String createUser(@RequestBody RequestUser user){
+    public ResponseEntity createUser(@RequestBody RequestUser user){
         ModelMapper mapper = new ModelMapper();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 
         UserDto userDto = mapper.map(user,UserDto.class);
         userService.createUser(userDto);
-        return "Create user method is called";
+
+        ResponseUser responseUser = mapper.map(userDto, ResponseUser.class);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseUser);
     }
 }
