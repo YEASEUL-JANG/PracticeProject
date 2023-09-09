@@ -12,10 +12,9 @@ spring:
     password: dptmfl12
   jpa:
     hibernate:
-      ddl-auto: create
-    properties:
-      hibernate:
-        format_sql: true
+      ddl-auto: update
+    show-sql: true
+    generate-ddl: true
 
 eureka:
   instance:
@@ -26,7 +25,7 @@ eureka:
     service-url:
       defaultZone: http://127.0.0.1:8761/eureka
 
-
 logging:
   level:
     com.example.catalogservice: DEBUG
+
