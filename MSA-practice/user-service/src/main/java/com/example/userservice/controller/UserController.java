@@ -18,7 +18,7 @@ import java.util.*;
 
 @RestController
 @Slf4j
-@RequestMapping("/user-service")
+@RequestMapping("/")
 public class UserController {
 
     private Environment env;

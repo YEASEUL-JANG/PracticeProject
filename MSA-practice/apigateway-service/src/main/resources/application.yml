@@ -19,10 +19,35 @@ spring:
             preLogger: true
             postLogger: true
       routes:
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
-            - Path=/user-service/**
+#        - id: user-service
+#          uri: lb://USER-SERVICE
+#          predicates:
+#            - Path=/user-service/**
+        -  id: user-service
+           uri: lb://USER-SERVICE
+           predicates:
+             - Path=/user-service/login #로그인 (실제 contoller에 없는 api, 스프링시큐리티에서 제공된 login api를 사용)
+             - Method=POST
+           filters:
+             - RemoveRequestHeader=Cookie
+             - RewritePath=/user-service/(?<segment>.*),/$\{segment}
+        -  id: user-service
+           uri: lb://USER-SERVICE
+           predicates:
+             - Path=/user-service/users #회원가입
+             - Method=POST
+           filters:
+             - RemoveRequestHeader=Cookie
+             - RewritePath=/user-service/(?<segment>.*),/$\{segment}
+        -  id: user-service
+           uri: lb://USER-SERVICE
+           predicates:
+             - Path=/user-service/** #그 외 나머지 요청 (요청 헤더안에 인증토큰있는지 검증)
+             - Method=GET
+           filters:
+             - RemoveRequestHeader=Cookie
+             - RewritePath=/user-service/(?<segment>.*),/$\{segment}
+             - AuthorizationHeaderFilter
         - id: catalog-service
           uri: lb://CATALOG-SERVICE
           predicates:
@@ -32,3 +57,6 @@ spring:
           predicates:
             - Path=/order-service/**
 
+
+token:
+  secret: user_token
