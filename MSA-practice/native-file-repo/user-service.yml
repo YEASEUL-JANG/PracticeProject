@@ -1,6 +1,13 @@
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://127.0.0.1:3308/userService
+    username: yeaseul
+    password: '{cipher}8c5f2560ed259eb5670f3b0effe509c5e9b21477eed2a5445adcc3c1f8cfc60c'
+
 token:
   expiration_time: 86400000
-  secret: user_token_native_usesr_service
+  secret: user_token_native
 
 gateway:
   ip: 192.168.6.45

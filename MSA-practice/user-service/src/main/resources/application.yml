@@ -10,11 +10,7 @@ spring:
     port: 5672
     username: guest
     password: guest
-  datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://127.0.0.1:3308/userService
-    username: yeaseul
-    password: dptmfl12
+
   jpa:
     hibernate:
       ddl-auto: create
