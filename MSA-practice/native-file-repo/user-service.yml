@@ -3,11 +3,12 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://127.0.0.1:3308/userService
     username: yeaseul
-    password: '{cipher}8c5f2560ed259eb5670f3b0effe509c5e9b21477eed2a5445adcc3c1f8cfc60c'
+    password: '{cipher}AQBeISvkwG3nbW0zQeR3zRNwYtM2a1XJnhE5O777EymRb0hjcEGH0YyEULCdv5Swt7SFtb/uyQ9PZx7Cwh42WvaLFluRhj2oWmBqrDhr7AHppUwFd3oSUldPmvYAhBmKkmdutVTZ49/kP7n3Rvf6GMpE0sCH3kBbqOplp80FSoWea507lT3yDJC/dNhZ3IDLsUSa4x4UjfMTK7/trnx7mn545FYA0LTgAzIboHbM6qOZqQvkyukViF4cMqiB6EK8o97Lh4GawjwpMxTeF4WZo0mQeyqJ6hrkSWIJzWc1ZBnjfXcOUsrdiquwP8rIrUxVnuDG/+3tc4/r89xQwxezpHh06DxnoQop8IMMacDRgOQJkYaUd7yY5hgwk3TyKA0Q2xs='
 
-token:
-  expiration_time: 86400000
-  secret: user_token_native
+# token:
+#   expiration_time: 86400000
+#   secret: '{cipher}AQBeaVVc2BgTz7PxDNNkg9c7cU2zzrI8Vk4petmt8/EoGSLn4ZEjxBoGQGgfDFh7bENdj9ocGENk90ZTe5XERsPNQal0PKsSfXPsyBWfky3gPBGz+kT26NyLbKhMTUWfJ6fE0dOMa8EiiGUZjWyENW2YDrFj4ntYRPPPQZDlC3NflSOH5I1b12+Uo43dDocWf1ZM+COziwZQfXAL/q8plI7z3bry8uDFpq0cH4EccyLN9i0yfTDTFUC8etv0GwwPxv2U+Hq6+qRnNcgZXsSs4LsNcpk8g0OVRvBpR03/71hc0s8YZDFpU4YFk4SjUXldVxkeaLXW21mgLtqmuWKnH0hWnP7wDPYtxGfbxMVs28NzzIzkTcSFyzFNZUD0qekngQVJGWwe65bMBvk38KPaiV77'
+
 
 gateway:
   ip: 192.168.6.45
