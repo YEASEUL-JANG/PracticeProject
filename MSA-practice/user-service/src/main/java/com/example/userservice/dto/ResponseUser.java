@@ -3,7 +3,6 @@ package com.example.userservice.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -15,13 +14,4 @@ public class ResponseUser {
 
     private List<ResponseOrder> orders;
 
-    @Data
-    public class ResponseOrder{
-        private String productId;
-        private String qty;
-        private Integer unitPrice;
-        private Integer totalPrice;
-        private Date createdAt;
-        private String orderId;
-    }
 }

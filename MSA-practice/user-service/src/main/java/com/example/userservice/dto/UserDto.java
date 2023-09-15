@@ -15,5 +15,5 @@ public class UserDto {
 
     private String encryptedPwd;
 
-    private List<ResponseUser.ResponseOrder> orders;
+    private List<ResponseOrder> orders;
 }
