@@ -1,0 +1,2 @@
+[2023-09-19 15:08:57,645] INFO [GroupMetadataManager brokerId=0] Group console-consumer-48686 transitioned to Dead in generation 2 (kafka.coordinator.group.GroupMetadataManager)
+[2023-09-19 15:08:57,678] INFO [GroupMetadataManager brokerId=0] Group console-consumer-353 transitioned to Dead in generation 2 (kafka.coordinator.group.GroupMetadataManager)
