@@ -1,0 +1,6 @@
+[2023-09-18 16:00:16,955] INFO Creating topic quickstart-events with configuration {} and initial partition assignment HashMap(0 -> ArrayBuffer(0)) (kafka.zk.AdminZkClient)
+[2023-09-18 16:00:17,172] INFO [ReplicaFetcherManager on broker 0] Removed fetcher for partitions Set(quickstart-events-0) (kafka.server.ReplicaFetcherManager)
+[2023-09-18 16:00:17,236] INFO [LogLoader partition=quickstart-events-0, dir=/tmp/kafka-logs] Loading producer state till offset 0 with message format version 2 (kafka.log.UnifiedLog$)
+[2023-09-18 16:00:17,249] INFO Created log for partition quickstart-events-0 in /tmp/kafka-logs/quickstart-events-0 with properties {} (kafka.log.LogManager)
+[2023-09-18 16:00:17,265] INFO [Partition quickstart-events-0 broker=0] No checkpointed highwatermark is found for partition quickstart-events-0 (kafka.cluster.Partition)
+[2023-09-18 16:00:17,269] INFO [Partition quickstart-events-0 broker=0] Log loaded for partition quickstart-events-0 with initial high watermark 0 (kafka.cluster.Partition)
