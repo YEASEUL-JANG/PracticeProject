@@ -4,6 +4,7 @@ import com.example.orderservice.dto.OrderDto;
 import com.example.orderservice.dto.RequestOrder;
 import com.example.orderservice.dto.ResponseOrder;
 import com.example.orderservice.entity.OrderEntity;
+import com.example.orderservice.kafka.KafkaProducer;
 import com.example.orderservice.service.OrderService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -18,8 +19,10 @@ import java.util.*;
 @RequestMapping("/order-service")
 public class OrderController {
     private OrderService orderService;
+    private KafkaProducer kafkaProducer;
     @Autowired
-    public OrderController(OrderService orderService) {
+    public OrderController(OrderService orderService, KafkaProducer kafkaProducer) {
+        this.kafkaProducer = kafkaProducer;
         this.orderService = orderService;
     }
 
@@ -33,6 +36,11 @@ public class OrderController {
         orderDto.setUserId(userId);
         OrderDto createDto = orderService.createOrder(orderDto);
         ResponseOrder returnValue = modelMapper.map(createDto, ResponseOrder.class);
+
+        /*
+        Send an order to the Kafka
+         */
+        kafkaProducer.send("example-order-topic", orderDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(returnValue);
     }
