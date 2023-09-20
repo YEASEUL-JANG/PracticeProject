@@ -5,6 +5,7 @@ import com.example.orderservice.dto.RequestOrder;
 import com.example.orderservice.dto.ResponseOrder;
 import com.example.orderservice.entity.OrderEntity;
 import com.example.orderservice.kafka.KafkaProducer;
+import com.example.orderservice.kafka.OrderProducer;
 import com.example.orderservice.service.OrderService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -20,10 +21,13 @@ import java.util.*;
 public class OrderController {
     private OrderService orderService;
     private KafkaProducer kafkaProducer;
+
+    private OrderProducer orderProducer;
     @Autowired
-    public OrderController(OrderService orderService, KafkaProducer kafkaProducer) {
+    public OrderController(OrderProducer orderProducer,OrderService orderService, KafkaProducer kafkaProducer) {
         this.kafkaProducer = kafkaProducer;
         this.orderService = orderService;
+        this.orderProducer = orderProducer;
     }
 
     @PostMapping("/{userId}/orders")
@@ -34,14 +38,18 @@ public class OrderController {
 
         OrderDto orderDto = modelMapper.map(orderDetails, OrderDto.class);
         orderDto.setUserId(userId);
-        OrderDto createDto = orderService.createOrder(orderDto);
-        ResponseOrder returnValue = modelMapper.map(createDto, ResponseOrder.class);
+        /* jpa */
+//        OrderDto createDto = orderService.createOrder(orderDto);
+//        ResponseOrder returnValue = modelMapper.map(createDto, ResponseOrder.class);
 
-        /*
-        Send an order to the Kafka
-         */
+        /* kafka */
+         orderDto.setOrderId(UUID.randomUUID().toString());
+         orderDto.setTotalPrice(orderDetails.getQty()* orderDetails.getUnitPrice());
+         ResponseOrder returnValue = modelMapper.map(orderDto, ResponseOrder.class);
+
+        /* Send an order to the Kafka */
         kafkaProducer.send("example-order-topic", orderDto);
-
+        orderProducer.send("orders",orderDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(returnValue);
     }
 
