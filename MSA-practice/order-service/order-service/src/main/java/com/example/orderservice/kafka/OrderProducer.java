@@ -30,6 +30,7 @@ public class OrderProducer {
 
     public OrderDto send(String kafkaTopic, OrderDto orderDto){
 
+        //실제 전달되는 값
         Payload payload = Payload.builder()
                 .order_id(orderDto.getOrderId())
                 .user_id(orderDto.getUserId())

@@ -6,11 +6,12 @@ import com.example.userservice.dto.ResponseOrder;
 import com.example.userservice.entity.UserEntity;
 import com.example.userservice.repository.UserRepository;
 import com.example.userservice.dto.UserDto;
-import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.core.env.Environment;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,6 +31,8 @@ public class UserServiceImpl implements UserService {
     private BCryptPasswordEncoder passwordEncoder;
     private RestTemplate restTemplate;
     private Environment env;
+    @Autowired
+    CircuitBreakerFactory circuitBreakerFactory;
     private OrderServiceClient orderServiceClient;
     @Autowired
     //생성자 주입으로 주입된 객체들은 빈으로 등록이 되어있어야 한다.
@@ -74,7 +77,12 @@ public class UserServiceImpl implements UserService {
 //        List<ResponseOrder> ordersList = orderListResponse.getBody();
 
         //* Using a feignclient *//
-        List<ResponseOrder> ordersList = orderServiceClient.getOrders(userId);
+//        List<ResponseOrder> ordersList = orderServiceClient.getOrders(userId);
+
+        /* CircuitBreaker*/
+        CircuitBreaker circuitBreaker = circuitBreakerFactory.create("circuitbreaker");
+        List<ResponseOrder> ordersList = circuitBreaker.run(() -> orderServiceClient.getOrders(userId),
+                throwable -> new ArrayList<>());
         userDto.setOrders(ordersList);
         return userDto;
     }
