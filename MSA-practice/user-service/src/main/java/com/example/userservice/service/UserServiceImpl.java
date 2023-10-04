@@ -31,8 +31,7 @@ public class UserServiceImpl implements UserService {
     private BCryptPasswordEncoder passwordEncoder;
     private RestTemplate restTemplate;
     private Environment env;
-    @Autowired
-    CircuitBreakerFactory circuitBreakerFactory;
+    private CircuitBreakerFactory circuitBreakerFactory;
     private OrderServiceClient orderServiceClient;
     @Autowired
     //생성자 주입으로 주입된 객체들은 빈으로 등록이 되어있어야 한다.
@@ -41,12 +40,14 @@ public class UserServiceImpl implements UserService {
                            BCryptPasswordEncoder passwordEncoder,
                            Environment env,
                            RestTemplate restTemplate,
-                           OrderServiceClient orderServiceClient) {
+                           OrderServiceClient orderServiceClient,
+                           CircuitBreakerFactory circuitBreakerFactory) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.env = env;
         this.restTemplate = restTemplate;
         this.orderServiceClient = orderServiceClient;
+        this.circuitBreakerFactory = circuitBreakerFactory;
     }
 
     @Override
@@ -80,9 +81,11 @@ public class UserServiceImpl implements UserService {
 //        List<ResponseOrder> ordersList = orderServiceClient.getOrders(userId);
 
         /* CircuitBreaker*/
+        log.info("Before call orders microservice");
         CircuitBreaker circuitBreaker = circuitBreakerFactory.create("circuitbreaker");
         List<ResponseOrder> ordersList = circuitBreaker.run(() -> orderServiceClient.getOrders(userId),
                 throwable -> new ArrayList<>());
+        log.info("After called orders microservice");
         userDto.setOrders(ordersList);
         return userDto;
     }
