@@ -54,6 +54,11 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-sleuth</artifactId>
         </dependency>
+        <!--		Spring Boot Actuator(application 상태 모니터링)-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
         <!--		micrometer-->
         <dependency>
             <groupId>io.micrometer</groupId>
