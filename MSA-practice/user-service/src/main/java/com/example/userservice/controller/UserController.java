@@ -74,4 +74,9 @@ public class UserController {
         ResponseUser responseUser = new ModelMapper().map(userDto,ResponseUser.class);
         return ResponseEntity.ok(responseUser);
     }
+        public String solution(String my_string) {
+        StringBuilder answer = new StringBuilder();
+        answer.append(my_string);
+            return answer.reverse().toString();
+        }
 }
