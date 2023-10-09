@@ -2,6 +2,6 @@ encrypt:
  # key: abcdefghijklmnopqrstuvwxyz1234567890
   key-store:
     #location: file://${user.home}/Documents/SideProject/ProjectPractice/PracticeProject/MSA-practice/keystore/apiEncryptionKey.jks
-    location: file:/apiEncrytionKey.jks
+    location: file:/apiEncryptionKey.jks
     password: test1234
     alias: apiEncryptionKey
