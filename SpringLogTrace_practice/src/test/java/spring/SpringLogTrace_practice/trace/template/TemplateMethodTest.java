@@ -40,4 +40,27 @@ public class TemplateMethodTest {
         AbstractTemplate template2 = new SubClassLogic2();
         template2.execute();
     }
+    /**
+     * 템플릿 메서드 패턴 - 익명 내부클래스 : Sub 클래스들을 따로 만들기 않고 바로 구현하는것.
+     */
+    @Test
+    void templateMethodV2(){
+        AbstractTemplate template1 = new AbstractTemplate() {
+            //추상클래스를 상속받을 클래스를 여기에서 바로 만들 수 있음
+            @Override
+            protected void call() {
+                log.info("비즈니스 로직 1 실행");
+            }
+        };
+        template1.execute();
+        AbstractTemplate template2 = new AbstractTemplate() {
+            //추상클래스를 상속받을 클래스를 여기에서 바로 만들 수 있음
+            @Override
+            protected void call() {
+                log.info("비즈니스 로직 2 실행");
+            }
+        };
+        template2.execute();
+    }
+
 }
