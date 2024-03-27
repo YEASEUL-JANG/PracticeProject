@@ -2,7 +2,10 @@ package spring.SpringLogTrace_practice.trace.strategy;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import spring.SpringLogTrace_practice.trace.strategy.code.*;
+import spring.SpringLogTrace_practice.trace.strategy.code.strategy.ContextV2;
+import spring.SpringLogTrace_practice.trace.strategy.code.strategy.Strategy;
+import spring.SpringLogTrace_practice.trace.strategy.code.strategy.StrategyLogic1;
+import spring.SpringLogTrace_practice.trace.strategy.code.strategy.StrategyLogic2;
 
 @Slf4j
 public class ContextV2Test {

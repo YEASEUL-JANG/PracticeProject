@@ -2,13 +2,10 @@ package spring.SpringLogTrace_practice.trace.strategy;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import spring.SpringLogTrace_practice.trace.strategy.code.ContextV1;
-import spring.SpringLogTrace_practice.trace.strategy.code.Strategy;
-import spring.SpringLogTrace_practice.trace.strategy.code.StrategyLogic1;
-import spring.SpringLogTrace_practice.trace.strategy.code.StrategyLogic2;
-import spring.SpringLogTrace_practice.trace.template.code.AbstractTemplate;
-import spring.SpringLogTrace_practice.trace.template.code.SubClassLogic1;
-import spring.SpringLogTrace_practice.trace.template.code.SubClassLogic2;
+import spring.SpringLogTrace_practice.trace.strategy.code.strategy.ContextV1;
+import spring.SpringLogTrace_practice.trace.strategy.code.strategy.Strategy;
+import spring.SpringLogTrace_practice.trace.strategy.code.strategy.StrategyLogic1;
+import spring.SpringLogTrace_practice.trace.strategy.code.strategy.StrategyLogic2;
 
 @Slf4j
 public class ContextV1Test {

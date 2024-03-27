@@ -1,4 +1,4 @@
-package spring.SpringLogTrace_practice.trace.strategy.code;
+package spring.SpringLogTrace_practice.trace.strategy.code.strategy;
 
 import lombok.extern.slf4j.Slf4j;
 
