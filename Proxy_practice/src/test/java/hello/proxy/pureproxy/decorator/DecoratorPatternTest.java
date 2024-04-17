@@ -1,8 +1,6 @@
 package hello.proxy.pureproxy.decorator;
 
-import hello.proxy.pureproxy.decorator.code.DecoratorPatternClient;
-import hello.proxy.pureproxy.decorator.code.MessageDecorator;
-import hello.proxy.pureproxy.decorator.code.RealComponent;
+import hello.proxy.pureproxy.decorator.code.*;
 import hello.proxy.pureproxy.proxy.code.CacheProxy;
 import hello.proxy.pureproxy.proxy.code.ProxyPatternClient;
 import hello.proxy.pureproxy.proxy.code.RealSubject;
@@ -22,6 +20,15 @@ public class DecoratorPatternTest {
         RealComponent component = new RealComponent();
         MessageDecorator messageDecorator = new MessageDecorator(component);
         DecoratorPatternClient decoratorPatternClient = new DecoratorPatternClient(messageDecorator);
+        decoratorPatternClient.execute();
+    }
+
+    @Test
+    void decorator2(){
+        Component realComponent = new RealComponent();
+        Component messageDecorator = new MessageDecorator(realComponent);
+        Component timeDecorator = new TimeDecorator(messageDecorator);
+        DecoratorPatternClient decoratorPatternClient = new DecoratorPatternClient(timeDecorator);
         decoratorPatternClient.execute();
     }
 }
