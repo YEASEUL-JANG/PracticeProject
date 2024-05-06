@@ -4,7 +4,6 @@ import hello.proxy.app.v1.OrderRepositoryV1;
 import hello.proxy.app.v2.OrderRepositoryV2;
 import hello.proxy.trace.TraceStatus;
 import hello.proxy.trace.logtrace.LogTrace;
-import lombok.RequiredArgsConstructor;
 
 public class OrderRepositoryConcreteProxy extends OrderRepositoryV2 {
     private final LogTrace logTrace;

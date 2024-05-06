@@ -1,7 +1,6 @@
 package hello.proxy.config;
 
 import hello.proxy.app.v1.*;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
