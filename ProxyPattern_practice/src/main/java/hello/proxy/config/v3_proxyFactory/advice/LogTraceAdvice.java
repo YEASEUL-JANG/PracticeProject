@@ -1,4 +1,4 @@
-package hello.proxy.config;
+package hello.proxy.config.v3_proxyFactory.advice;
 
 import hello.proxy.trace.TraceStatus;
 import hello.proxy.trace.logtrace.LogTrace;

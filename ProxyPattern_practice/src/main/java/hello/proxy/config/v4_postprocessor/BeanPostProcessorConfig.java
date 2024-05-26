@@ -2,7 +2,7 @@ package hello.proxy.config.v4_postprocessor;
 
 import hello.proxy.config.AppConfigV1;
 import hello.proxy.config.AppConfigV2;
-import hello.proxy.config.LogTraceAdvice;
+import hello.proxy.config.v3_proxyFactory.advice.LogTraceAdvice;
 import hello.proxy.config.v4_postprocessor.postprocessor.PackageLogTracePostProcessor;
 import hello.proxy.trace.logtrace.LogTrace;
 import lombok.extern.slf4j.Slf4j;
