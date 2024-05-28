@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Import;
 
 @Slf4j
 @SpringBootTest
-@Import({AspectV5Order.LogAspect.class, AspectV5Order.TxAspect.class}) //스프링빈으로 등록됨!
+@Import({AspectV6Advice.class}) //스프링빈으로 등록됨!
 public class AopTest {
     @Autowired
     OrderService orderService;
