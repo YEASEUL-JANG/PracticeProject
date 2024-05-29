@@ -27,22 +27,24 @@ public class AspectV6Advice {
 //            log.info("[리소스 릴리즈] {}",joinPoint.getSignature());
 //        }
 //    }
+
+    //조인포인트 실행 전
     @Before(("hello.aop.order.aop.Pointcuts.orderAndService()"))
     public void deBefore(JoinPoint joinPoint){//ProceedingJoinPoint 는 Around에서만 사용가능
         log.info("[before] {}",joinPoint.getSignature());
         //위의 로직이 끝나면 joinPoint를 그냥 실행해준다. (실제 타겟 자동 실행)
     }
+    //메서드 실행이 정상적으로 반환될 때 실행
     @AfterReturning(value = ("hello.aop.order.aop.Pointcuts.orderAndService()"),returning = "result")
     public void doReturn(JoinPoint joinPoint,Object result){//returning 값이랑 매칭되어 리턴값이 들어옴
         log.info("[AfterReturning] {}, result = {}",joinPoint.getSignature(), result);
-        //위의 로직이 끝나면 joinPoint를 그냥 실행해준다. (실제 타겟 자동 실행)
     }
+    //메서드 실행이 예외를 던져서 종료될 때 실행
     @AfterThrowing(value = ("hello.aop.order.aop.Pointcuts.orderAndService()"),throwing = "ex")
     public void doThrowing(JoinPoint joinPoint,Exception ex){//returning 값이랑 매칭되어 리턴값이 들어옴
-        log.info("[ex] {} message = {}", ex);
-        //위의 로직이 끝나면 joinPoint를 그냥 실행해준다. (실제 타겟 자동 실행)
+        log.info("[ex] message = {}", ex);
     }
-
+    //메서드 실행이 종료되면 실행
     @After(value = ("hello.aop.order.aop.Pointcuts.orderAndService()"))
     public void doAfter(JoinPoint joinPoint){//returning 값이랑 매칭되어 리턴값이 들어옴
         log.info("[after] {} ", joinPoint.getSignature());
